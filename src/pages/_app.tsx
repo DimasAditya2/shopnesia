@@ -1,4 +1,6 @@
+import Navbar from "@/components/layouts";
 import "@/styles/globals.css";
+import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 import { Poppins } from "next/font/google";
 
@@ -8,10 +10,13 @@ const poppins = Poppins({
   variable: "--font-poppins",
 });
 
-export default function App({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps: {session, ...pageProps} }: AppProps) {
   return (
-    <div className={poppins.className}>
-      <Component {...pageProps} />
-    </div>
+    <SessionProvider session={session}>
+      <main className={`${poppins.variable} font-sans`}>
+        <Navbar/>
+        <Component {...pageProps} />
+      </main>
+    </SessionProvider>
   );
 }
