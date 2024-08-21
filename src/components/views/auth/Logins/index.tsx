@@ -4,6 +4,8 @@ import { FaEye } from "react-icons/fa";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
+import { FaGoogle } from "react-icons/fa";
+
 const LoginView = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>("");
@@ -83,6 +85,7 @@ const LoginView = () => {
             </button>
           </div>
         </form>
+        <button type="button" onClick={() => signIn("google", {callbackUrl, redirect: false})} className={styles.login__nav__login__button}><FaGoogle size={25} /></button>
       </div>
     </div>
   );

@@ -83,11 +83,8 @@ export async function signUp(
   }
 }
 
-export async function signIn(email:string) {
-  const q = query(
-    collection(firestore, "users"),
-    where("email", "==", email)
-  );
+export async function signIn(email: string) {
+  const q = query(collection(firestore, "users"), where("email", "==", email));
 
   const snapshot = await getDocs(q);
 
@@ -97,12 +94,29 @@ export async function signIn(email:string) {
   }));
 
   if (data) {
-    console.log('Data exists in Firestore')
-    console.log(data[0])
-    return data[0]
+    console.log("Data exists in Firestore");
+    return data[0];
   } else {
-    return null
+    return null;
   }
+}
 
+export async function looginWithGoogle(data: any, callback: Function) {
+  const q = query(collection(firestore, "users"), where("email", "==", data.email));
 
+  const snapshot = await getDocs(q);
+
+  const user = snapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  if (user.length> 0) {
+    callback(user[0])
+  } else {
+    data.role = 'member'
+    await addDoc(collection(firestore, 'users'), data).then(() => {
+      callback(data)
+    })
+  }
 }
