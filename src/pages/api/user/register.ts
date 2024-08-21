@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { signUp } from "@/lib/firebase/service";
+import { signUp } from "@/services/auth";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
