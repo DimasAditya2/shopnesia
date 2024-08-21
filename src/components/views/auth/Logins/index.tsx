@@ -1,10 +1,12 @@
 import Link from "next/link";
-import styles from "./Login.module.scss";
 import { FaEye } from "react-icons/fa";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
+import Input from "@/components/ui/Input";
+import styles from "./Login.module.scss";
+import Button from "@/components/ui/Button";
 
 const LoginView = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,13 +27,15 @@ const LoginView = () => {
         callbackUrl: Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl,
       });
 
-      console.log(res?.ok)
+      console.log(res?.ok);
 
       if (!res?.error) {
+        console.log('success');
         setLoading(false);
         form.reset();
-        push(callbackUrl);
+        push(callbackUrl as string);
       } else {
+        console.log('failed');
         setLoading(false);
         setError("Wrong email or password");
       }
@@ -47,29 +51,8 @@ const LoginView = () => {
       {error && <p className={styles.login__error}>{error}</p>}
       <div className={styles.login__form}>
         <form onSubmit={handlerLogin}>
-          <div className={styles.login__input}>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              className={styles.login__input__field}
-            />
-          </div>
-          <div
-            className={`${styles.login__input} ${styles.login__input__password}`}
-          >
-            <input
-              type="password"
-              name="password"
-              id="password"
-              placeholder="Password"
-              className={styles.login__input__field}
-            />
-            <div className={styles.login__input__password__icon}>
-              <FaEye />
-            </div>
-          </div>
+          <Input name="email" type="email" placeholder="Email" />
+          <Input name="password" type="password" placeholder="Password" />
           <div className={styles.login__nav__login}>
             <p>
               Dont have an account ?{" "}
@@ -80,12 +63,12 @@ const LoginView = () => {
                 Sign up
               </Link>
             </p>
-            <button type="submit" className={styles.login__nav__login__button}>
-              {loading ? "Loading..." : "Login"}
-            </button>
+            <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
           </div>
         </form>
-        <button type="button" onClick={() => signIn("google", {callbackUrl, redirect: false})} className={styles.login__nav__login__button}><FaGoogle size={25} /></button>
+        <Button type="button" onClick={() => signIn("google", {callbackUrl: Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl,})}>
+          <span>Login With Google </span> <FaGoogle size={25} />
+        </Button>
       </div>
     </div>
   );

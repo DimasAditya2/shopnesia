@@ -4,6 +4,8 @@ import styles from "./Register.module.scss";
 import { FaEye } from "react-icons/fa";
 import { useRouter } from "next/router";
 import { FormEvent, useState } from "react";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 const RegisterView = () => {
   const { push } = useRouter();
   const [loading, setLoading] = useState<boolean>(false);
@@ -46,47 +48,10 @@ const RegisterView = () => {
       {error && <p className={styles.register__error}>{error}</p>}
       <div className={styles.register__form}>
         <form onSubmit={handlerRegister}>
-          <div className={styles.register__input}>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              placeholder="Email"
-              className={styles.register__input__field}
-            />
-          </div>
-          <div className={styles.register__input}>
-            <input
-              type="text"
-              name="phoneNumber"
-              placeholder="Phone Number"
-              id="phoneNumber"
-              className={styles.register__input__field}
-            />
-          </div>
-          <div className={styles.register__input}>
-            <input
-              type="text"
-              placeholder="Full Name"
-              id="fullName"
-              name="fullName"
-              className={styles.register__input__field}
-            />
-          </div>
-          <div
-            className={`${styles.register__input} ${styles.register__input__password}`}
-          >
-            <input
-              type="password"
-              id="password"
-              name="password"
-              placeholder="Password"
-              className={styles.register__input__field}
-            />
-            <div className={styles.register__input__password__icon}>
-              <FaEye />
-            </div>
-          </div>
+          <Input name="email" type="email" placeholder="Email" />
+          <Input name="phoneNumber" type="text" placeholder="Phone Number" />
+          <Input name="fullName" type="text" placeholder="Full Name" />
+          <Input name="password" type="password" placeholder="Password" />
           <div className={styles.register__nav__login}>
             <p>
               Have an account?{" "}
@@ -97,9 +62,12 @@ const RegisterView = () => {
                 Sign in
               </Link>
             </p>
-            <button className={styles.register__nav__login__button}>
+            <Button type="submit" className={``}>
               {loading ? "Loading..." : "Register"}
-            </button>
+            </Button>
+
+            {/* <button className={styles.register__nav__login__button}>
+            </button> */}
           </div>
         </form>
       </div>
