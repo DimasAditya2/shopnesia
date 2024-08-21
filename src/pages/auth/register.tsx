@@ -1,11 +1,11 @@
-import RegisterView from "@/views/auth/Registers"
+import RegisterView from "@/components/views/auth/Registers";
 
 const RegisterPage = () => {
-return (
+  return (
     <>
-        <RegisterView/>
+      <RegisterView />
     </>
-)
-}
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;
