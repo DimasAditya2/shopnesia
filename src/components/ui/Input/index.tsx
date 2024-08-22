@@ -1,7 +1,8 @@
 import { FaEye } from "react-icons/fa";
 import styles from "./Input.module.scss";
+import { InputProps } from "@/types";
 
-const Input = (props: Input) => {
+const Input = (props: InputProps) => {
   const { name, type, placeholder } = props;
   return (
     <>
