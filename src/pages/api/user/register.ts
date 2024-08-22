@@ -1,5 +1,5 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import { signUp } from "@/services/auth";
+import { signUp } from "@/services/auth/services";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
@@ -10,12 +10,10 @@ export default async function handler(
   if (req.method === "POST") {
     await signUp(req.body, (status: boolean) => {
       if (status) {
-        console.log("success");
         res
           .status(200)
           .json({ status: true, statusCode: 200, message: "success" });
       } else {
-        console.log("failed");
         res
           .status(400)
           .json({ status: false, statusCode: 400, message: "failed" });

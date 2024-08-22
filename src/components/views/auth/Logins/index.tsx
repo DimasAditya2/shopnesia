@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { FaEye } from "react-icons/fa";
 import { FormEvent, useState } from "react";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
@@ -7,6 +6,7 @@ import { FaGoogle } from "react-icons/fa";
 import Input from "@/components/ui/Input";
 import styles from "./Login.module.scss";
 import Button from "@/components/ui/Button";
+import AuthLayout from "@/components/layouts/AuthLayout";
 
 const LoginView = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -30,12 +30,12 @@ const LoginView = () => {
       console.log(res?.ok);
 
       if (!res?.error) {
-        console.log('success');
+        console.log("success");
         setLoading(false);
         form.reset();
         push(callbackUrl as string);
       } else {
-        console.log('failed');
+        console.log("failed");
         setLoading(false);
         setError("Wrong email or password");
       }
@@ -46,31 +46,31 @@ const LoginView = () => {
     }
   };
   return (
-    <div className={styles.login}>
-      <h1 className={styles.login__title}>Login</h1>
-      {error && <p className={styles.login__error}>{error}</p>}
-      <div className={styles.login__form}>
-        <form onSubmit={handlerLogin}>
-          <Input name="email" type="email" placeholder="Email" />
-          <Input name="password" type="password" placeholder="Password" />
-          <div className={styles.login__nav__login}>
-            <p>
-              Dont have an account ?{" "}
-              <Link
-                href="/auth/register"
-                className={styles.login__nav__login__link}
-              >
-                Sign up
-              </Link>
-            </p>
-            <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
-          </div>
-        </form>
-        <Button type="button" onClick={() => signIn("google", {callbackUrl: Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl,})}>
-          <span>Login With Google </span> <FaGoogle size={25} />
-        </Button>
-      </div>
-    </div>
+    <AuthLayout
+      title="Login"
+      link="/auth/register"
+      linkText="Dont have an account ? Sign up"
+    >
+      <form onSubmit={handlerLogin}>
+        <Input name="email" type="email" placeholder="Email" />
+        <Input name="password" type="password" placeholder="Password" />
+        <div className={styles.login__nav__login}>
+          <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
+        </div>
+      </form>
+      <Button
+        type="button"
+        onClick={() =>
+          signIn("google", {
+            callbackUrl: Array.isArray(callbackUrl)
+              ? callbackUrl[0]
+              : callbackUrl,
+          })
+        }
+      >
+        <span>Login With Google </span> <FaGoogle size={25} />
+      </Button>
+    </AuthLayout>
   );
 };
 
