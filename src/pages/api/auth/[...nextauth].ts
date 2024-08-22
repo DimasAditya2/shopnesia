@@ -1,8 +1,10 @@
+import { emailSchema, passwordSchema } from "@/schemas";
 import { looginWithGoogle, signIn } from "@/services/auth/services";
 import { compare } from "bcrypt";
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
@@ -21,6 +23,19 @@ export const authOptions: NextAuthOptions = {
           email: string;
           password: string;
         };
+
+        const parsedEmail = emailSchema.safeParse(email);
+        const parsedPassword = passwordSchema.safeParse(password)
+
+        if (!parsedEmail.success || !parsedPassword.success) {
+          if (!parsedEmail.success) {
+            throw new Error(parsedPassword.error?.errors[0].message);
+          }
+          if (!parsedPassword.success) {
+            throw new Error(parsedPassword.error?.errors[0].message);
+          }
+        }
+
         const user: any = await signIn(email);
         if (user) {
           const isValidPassword = await compare(password, user.password);

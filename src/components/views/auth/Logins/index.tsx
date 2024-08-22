@@ -27,27 +27,24 @@ const LoginView = () => {
         callbackUrl: Array.isArray(callbackUrl) ? callbackUrl[0] : callbackUrl,
       });
 
-      console.log(res?.ok);
-
       if (!res?.error) {
         console.log("success");
         setLoading(false);
         form.reset();
-        push(callbackUrl as string);
+        push(callbackUrl as string); 
       } else {
-        console.log("failed");
         setLoading(false);
-        setError("Wrong email or password");
+        throw Error(res.error); 
       }
     } catch (error: any) {
       setLoading(false);
-      setError(error);
-      console.log(error);
+      setError(error.message);
     }
   };
   return (
     <AuthLayout
       title="Login"
+      error={error}
       link="/auth/register"
       linkText="Dont have an account ? Sign up"
     >
@@ -55,11 +52,12 @@ const LoginView = () => {
         <Input name="email" type="email" placeholder="Email" />
         <Input name="password" type="password" placeholder="Password" />
         <div className={styles.login__nav__login}>
-          <Button type="submit">{loading ? "Loading..." : "Login"}</Button>
+          <Button type="submit" variant="primary">{loading ? "Loading..." : "Login"}</Button>
         </div>
       </form>
       <Button
         type="button"
+        variant="primary"
         onClick={() =>
           signIn("google", {
             callbackUrl: Array.isArray(callbackUrl)

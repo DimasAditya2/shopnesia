@@ -9,6 +9,7 @@ type ButtonProps = {
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
+  variant: 'primary' | 'secondary' | 'success' | 'danger'
 };
 interface User {
   email: string;
@@ -26,4 +27,16 @@ type PropLayoutAuth = {
   linkText?: string;
 };
 
-export type {InputProps, ButtonProps, User, PropLayoutAuth}
+type PropsAdmin = {
+  children: React.ReactNode;
+}
+
+type PropsListSidebar = {
+  lists: Array<{
+    title: string,
+    url: string
+    icon: React.ReactNode
+  }>,
+}
+
+export type {InputProps, ButtonProps, User, PropLayoutAuth, PropsAdmin, PropsListSidebar}

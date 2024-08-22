@@ -1,10 +1,9 @@
 .button {
   width: 100%;
   height: 30px;
-  background-color: dodgerblue;
   outline: none;
   border: none;
-  border-radius: 2px;
+  border-radius: 5px;
   color: white;
   font-size: 18px;
   font-weight: bold;
@@ -17,6 +16,34 @@
   padding: 20px;
 }
 
-.button:hover {
+.primary {
+  background-color: dodgerblue;
+}
+
+.primary:hover {
+  background-color: rgb(10, 100, 190);
+}
+
+.secondary {
   background-color: rgb(59, 59, 186);
+}
+
+.secondary:hover {
+  background-color: rgb(10, 100, 190);
+}
+
+.success {
+  background-color: rgb(48, 179, 48);
+}
+
+.success:hover {
+  background-color: rgb(10, 100, 190);
+}
+
+.danger {
+  background-color: rgb(222, 35, 35);
+}
+
+.danger:hover {
+  background-color: rgb(225, 0, 0);
 }
